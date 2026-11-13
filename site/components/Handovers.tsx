@@ -37,9 +37,14 @@ export default function Handovers() {
     const show = (el: HTMLElement, on: boolean) => (el.style.visibility = on ? "visible" : "hidden");
     const triggers: ScrollTrigger[] = [];
 
-    // X1 + X5: bottom-aligned sticky (the section holds still once its bottom meets the screen bottom)
+    // X1 + X5: bottom-aligned sticky (the section holds still once its bottom meets the screen bottom, desktop only)
     const stickBottom = (el: HTMLElement) => {
       const set = () => {
+        if (window.innerWidth < 768) {
+          el.style.position = "";
+          el.style.top = "";
+          return;
+        }
         el.style.position = "sticky";
         el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`;
       };

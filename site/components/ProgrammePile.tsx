@@ -41,14 +41,14 @@ export default function ProgrammePile() {
 
   return (
     <section id="programmes" data-section="Programmes" className="relative z-[2] bg-bg shadow-[0_-30px_60px_rgba(0,0,0,0.6)]" data-record-time={1.8} data-record-label="programmes: arrive">
-      <div ref={tall} className="pin-outer relative h-[calc(100svh+200vh)]">
-        <div aria-hidden className="rec-stop pointer-events-none absolute left-0 top-[200vh] h-px w-px" data-record-time={3.2} data-record-label="programmes: pile" />
-        <div className="pin-stage flex flex-col px-[64px] pt-[104px]">
-          <div className="rule-b flex items-end justify-between pb-5">
-            <h2 className="stamp text-[64px]">{programmes.title.join(" ")}</h2>
-            <p className="mono-s whitespace-nowrap pb-2 text-muted">{programmes.tag}</p>
+      <div ref={tall} className="pin-outer relative h-[calc(100svh+350vh)]">
+        <div aria-hidden className="rec-stop pointer-events-none absolute left-0 top-[350vh] h-px w-px" data-record-time={3.2} data-record-label="programmes: pile" />
+        <div className="pin-stage flex flex-col px-4 sm:px-8 md:px-[64px] pt-[76px] md:pt-[104px]">
+          <div className="rule-b flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-4 md:pb-5">
+            <h2 className="stamp text-[36px] sm:text-[48px] md:text-[64px] leading-tight">{programmes.title.join(" ")}</h2>
+            <p className="mono-s pb-1 text-muted text-[11px] sm:text-[13px]">{programmes.tag}</p>
           </div>
-          <div ref={stage} className="relative mx-auto mt-[88px] h-[482px] w-[1120px]" style={{ perspective: "1600px", perspectiveOrigin: "50% 0%", transformStyle: "preserve-3d" }}>
+          <div ref={stage} className="relative mx-auto mt-6 md:mt-[88px] h-[520px] sm:h-[490px] md:h-[482px] w-full max-w-[1120px]" style={{ perspective: "1600px", perspectiveOrigin: "50% 0%", transformStyle: "preserve-3d" }}>
             {programmes.items.map((c, k) => (
               <article
                 key={c.name}
@@ -56,29 +56,29 @@ export default function ProgrammePile() {
                 className="bezel absolute inset-0 origin-top will-change-transform"
                 style={{ zIndex: k + 1 }}
               >
-                <div className="bezel-inner grid h-full grid-cols-[600px_1fr]">
+                <div className="bezel-inner flex flex-col md:grid h-full md:grid-cols-[600px_1fr]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={c.img} alt={`${c.name} programme`} className="h-[450px] w-[600px] object-cover" />
-                  <div className="flex flex-col justify-between p-9">
+                  <img src={c.img} alt={`${c.name} programme`} className="h-[180px] sm:h-[220px] md:h-[450px] w-full md:w-[600px] object-cover" />
+                  <div className="flex flex-1 flex-col justify-between p-4 sm:p-6 md:p-9">
                     <div>
-                      <p className="mono-s text-muted">
-                        Programme {String(k + 1).padStart(2, "0")} / {String(programmes.items.length).padStart(2, "0")}
+                      <p className="mono-s text-muted text-[11px] sm:text-[13px]">
+                        Service {String(k + 1).padStart(2, "0")} / {String(programmes.items.length).padStart(2, "0")}
                       </p>
-                      <h3 className="stamp mt-4 text-[44px]">{c.name}</h3>
-                      <p className="mt-4 text-[18px] leading-[1.45] text-fg/80">{c.note}</p>
+                      <h3 className="stamp mt-1.5 md:mt-3 text-[22px] sm:text-[28px] md:text-[36px] leading-[1.05]">{c.name}</h3>
+                      <p className="mt-1.5 md:mt-3 text-[13px] sm:text-[15px] md:text-[17px] leading-[1.4] text-fg/80">{c.note}</p>
                     </div>
-                    <dl className="grid grid-cols-2 gap-x-6 gap-y-4 border-t-2 border-[var(--rule)] pt-5">
+                    <dl className="grid grid-cols-2 gap-x-4 md:gap-x-6 gap-y-2 md:gap-y-4 border-t-2 border-[var(--rule)] pt-3 md:pt-5 mt-2">
                       <div>
-                        <dt className="mono-s text-muted">Length</dt>
-                        <dd className="stamp-n mt-1 text-[24px]">{c.weeks}</dd>
+                        <dt className="mono-s text-muted text-[10px] sm:text-[12px]">Schedule</dt>
+                        <dd className="stamp-n mt-0.5 md:mt-1 text-[16px] sm:text-[20px] md:text-[22px]">{c.weeks}</dd>
                       </div>
                       <div>
-                        <dt className="mono-s text-muted">Sessions</dt>
-                        <dd className="stamp-n mt-1 text-[24px]">{c.sessions}</dd>
+                        <dt className="mono-s text-muted text-[10px] sm:text-[12px]">Access</dt>
+                        <dd className="stamp-n mt-0.5 md:mt-1 text-[16px] sm:text-[20px] md:text-[22px]">{c.sessions}</dd>
                       </div>
                       <div className="col-span-2">
-                        <dt className="mono-s text-muted">Focus</dt>
-                        <dd className="stamp-n mt-1 text-[24px]">{c.focus}</dd>
+                        <dt className="mono-s text-muted text-[10px] sm:text-[12px]">Focus</dt>
+                        <dd className="stamp-n mt-0.5 md:mt-1 text-[14px] sm:text-[18px] md:text-[20px] truncate">{c.focus}</dd>
                       </div>
                     </dl>
                   </div>

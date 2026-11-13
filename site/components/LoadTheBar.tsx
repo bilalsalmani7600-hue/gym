@@ -105,7 +105,7 @@ export default function LoadTheBar() {
   const jolt = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
-  const readout = useRef<HTMLParagraphElement>(null);
+  const readout = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const sv = svg.current!;
@@ -114,7 +114,7 @@ export default function LoadTheBar() {
     const collarEls = sides.map((g) => g.querySelector<SVGRectElement>("[data-collar]")!);
     const shaft = Array.from(sv.querySelectorAll<SVGPathElement>("[data-shaft]"));
     const shadow = sv.querySelector<SVGEllipseElement>("[data-shadow]")!;
-    const cols = Array.from(readout.current!.querySelectorAll<HTMLElement>("[data-col]"));
+    const cols = Array.from(readout.current ? readout.current.querySelectorAll<HTMLElement>("[data-col]") : []);
     const legend = Array.from(stage.current!.querySelectorAll<HTMLElement>("[data-legend]"));
     const cv = canvas.current!;
     const ctx = cv.getContext("2d")!;
@@ -191,8 +191,10 @@ export default function LoadTheBar() {
       const v = st.kg;
       [100, 10, 1].forEach((place, k) => {
         const col = cols[k];
-        (col.firstElementChild as HTMLElement).style.transform = `translateY(${(-digitAt(v, place) * 100) / 11}%)`;
-        if (place === 100) col.style.opacity = String(0.22 + 0.78 * clamp((v - 90) / 10));
+        if (col && col.firstElementChild) {
+          (col.firstElementChild as HTMLElement).style.transform = `translateY(${(-digitAt(v, place) * 100) / 11}%)`;
+          if (place === 100) col.style.opacity = String(0.22 + 0.78 * clamp((v - 90) / 10));
+        }
       });
       legend.forEach((el, i) => {
         el.style.opacity = String(0.42 + 0.58 * st.pos[i]);
@@ -250,7 +252,10 @@ export default function LoadTheBar() {
     };
 
     measure();
-    const ro = new ResizeObserver(measure);
+    const ro = new ResizeObserver(() => {
+      measure();
+      draw(performance.now());
+    });
     ro.observe(stage.current!);
 
     if (prefersReducedMotion()) {
@@ -270,9 +275,9 @@ export default function LoadTheBar() {
       if (next.lift > 0.12 && prev.lift <= 0.12) hitFloor();
       prev = next;
       st = next;
+      draw(performance.now());
     };
-    // X5 hard cut: the stage stays hidden while the section slides up over the (sticky) floor, and appears at once
-    // when the section reaches the top, with a 3px stamp jolt; the first pair is already moving (P0 = 0.03)
+    // X5 hard cut: stage jolt when reaching the section
     const stageEl = stage.current!;
     const cut = ScrollTrigger.create({
       trigger: outer.current!,
@@ -281,10 +286,14 @@ export default function LoadTheBar() {
       onEnter: () => {
         stageEl.style.visibility = "visible";
         gsap.fromTo(jolt.current, { y: 3 }, { y: 0, duration: 0.35, ease: "expo.out", overwrite: true });
+        draw(performance.now());
       },
-      onLeaveBack: () => (stageEl.style.visibility = "hidden"),
+      onEnterBack: () => {
+        stageEl.style.visibility = "visible";
+        draw(performance.now());
+      },
     });
-    stageEl.style.visibility = cut.progress > 0 || outer.current!.getBoundingClientRect().top <= 0 ? "visible" : "hidden";
+    stageEl.style.visibility = "visible";
 
     const trig = ScrollTrigger.create({
       trigger: outer.current!,
@@ -293,11 +302,12 @@ export default function LoadTheBar() {
       onUpdate: (s) => apply(s.progress),
       onRefresh: (s) => {
         prev = st = stateAt(s.progress);
+        draw(performance.now());
       },
     });
     prev = st = stateAt(trig.progress);
 
-    // the ticker only runs while the section is near the screen
+    // the ticker runs continuously or while in view to keep dust and chalk alive
     let running = false;
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !running) {
@@ -340,39 +350,43 @@ export default function LoadTheBar() {
         {/* hard top light over the stage */}
         <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[70%] w-[70%] -translate-x-1/2 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(236,233,226,0.14),transparent_70%)]" />
 
-        <div ref={jolt} className="relative flex flex-1 flex-col">
-          <div className="relative flex items-start justify-between px-[64px] pt-[104px]">
+        <div ref={jolt} className="relative flex flex-1 flex-col justify-between">
+          <div className="relative flex items-start justify-between px-4 sm:px-8 md:px-[64px] pt-[92px] sm:pt-[104px]">
             <div>
-              <p className="mono-s text-muted">The signature · scroll to load</p>
-              <h2 className="stamp mt-4 text-[80px]">
-                {loadBar.title[0]}
-                <br />
-                {loadBar.title[1]}
+              <p className="mono-s text-muted text-[11px] sm:text-[12px] md:text-[13px] uppercase font-bold tracking-wider">The signature · scroll to load</p>
+              <h2 className="stamp mt-1 sm:mt-2 md:mt-3 text-[38px] xs:text-[46px] sm:text-[56px] md:text-[80px] leading-[0.88]">
+                <span className="block text-white">LOAD</span>
+                <span className="block text-[#ff1a1a] drop-shadow-[0_0_24px_rgba(255,26,26,0.45)]">THE BAR.</span>
               </h2>
             </div>
-            <div className="text-right">
-              <p className="mono-s text-muted">On the bar</p>
-              <p ref={readout} className="stamp mt-2 flex items-baseline justify-end text-[150px] leading-[0.85]" aria-label={`${KG_END} kilograms`}>
-                {final.map((ch, k) => (
-                  // each column is sized by its FINAL digit (lesson 73); the strip 0–9 + 0 rolls inside it
-                  <span key={k} data-col className="relative inline-block overflow-hidden" style={{ height: "1em", lineHeight: 1 }}>
-                    <span className="absolute left-0 right-0 top-0 flex flex-col">
-                      {Array.from({ length: 11 }, (_, d) => (
-                        <span key={d} className="block h-[1em] text-center">
-                          {d % 10}
-                        </span>
-                      ))}
+            <div className="text-right flex flex-col items-end">
+              <p className="mono-s text-muted text-[11px] sm:text-[12px] md:text-[13px] uppercase font-bold tracking-wider">On the bar</p>
+              <div ref={readout} className="stamp mt-1 sm:mt-1.5 md:mt-2 flex flex-col items-end sm:flex-row sm:items-baseline justify-end leading-[0.84]" aria-label={`${KG_END} kilograms`}>
+                <span className="flex items-baseline justify-end text-[54px] xs:text-[66px] sm:text-[104px] md:text-[150px] text-white font-black">
+                  {final.map((ch, k) => (
+                    // each column is sized by its FINAL digit (lesson 73); the strip 0–9 + 0 rolls inside it
+                    <span key={k} data-col className="relative inline-block overflow-hidden" style={{ height: "1em", lineHeight: 1 }}>
+                      <span className="absolute left-0 right-0 top-0 flex flex-col">
+                        {Array.from({ length: 11 }, (_, d) => (
+                          <span key={d} className="block h-[1em] text-center">
+                            {d % 10}
+                          </span>
+                        ))}
+                      </span>
+                      <span className="invisible block">{ch === " " ? "0" : ch}</span>
                     </span>
-                    <span className="invisible block">{ch === " " ? "0" : ch}</span>
-                  </span>
-                ))}
-                <span className="ml-3 text-[0.32em]">KG</span>
-              </p>
-              <p className="mono-s mt-3 text-muted">{loadBar.end}</p>
+                  ))}
+                </span>
+                <span className="text-[#ff1a1a] drop-shadow-[0_0_16px_rgba(255,26,26,0.55)] text-[18px] xs:text-[22px] sm:text-[0.32em] font-black sm:ml-2 md:ml-3 mt-0.5 sm:mt-0 tracking-wider">
+                  KG
+                </span>
+              </div>
+              <p className="mono-s mt-1 sm:mt-2 md:mt-3 text-muted text-[10px] xs:text-[11px] sm:text-[12px] md:text-[13px] font-bold tracking-wider uppercase">{loadBar.end}</p>
             </div>
           </div>
 
-          <div className="relative mt-auto">
+          {/* Barbell Container: Centered vertically and enlarged for mobile viewports */}
+          <div className="relative my-auto w-[124%] -mx-[12%] sm:w-full sm:mx-0 flex items-center justify-center">
             <svg ref={svg} viewBox={`0 0 ${W} ${H}`} className="relative block w-full" aria-label={`Barbell loaded to ${KG_END} kilograms`}>
               <PlateDefs id="it" />
               <rect x="0" y={FLOOR} width={W} height="2" fill="var(--rule)" />
@@ -399,20 +413,37 @@ export default function LoadTheBar() {
             </svg>
           </div>
 
+          {/* Motivational line: 2 rows on mobile, single row on sm+ */}
+          <div className="relative z-10 flex items-center justify-center gap-2 sm:gap-4 px-3 py-2 sm:py-3 shrink-0 overflow-hidden">
+            <span className="hidden sm:block h-px w-8 sm:w-16 bg-gradient-to-r from-transparent to-[#ff1a1a] shrink-0" />
+            <p className="stamp text-[11px] xs:text-[13px] sm:text-[13.5px] md:text-[15.5px] tracking-[0.08em] xs:tracking-[0.10em] sm:tracking-[0.18em] text-[#f2eee6] uppercase text-center font-black flex flex-col sm:flex-row items-center justify-center leading-snug sm:leading-normal min-w-0">
+              <span className="inline-flex items-center justify-center whitespace-nowrap">
+                <span className="text-[#ff1a1a] mr-1 sm:mr-2">/</span>
+                START WITH THE EMPTY BAR
+              </span>
+              <span className="hidden sm:inline text-[#ff1a1a] mx-2">•</span>
+              <span className="inline-flex items-center justify-center whitespace-nowrap text-white/95">
+                <span className="text-[#ff1a1a] mr-1 sm:hidden">•</span>
+                EARN EVERY PLATE
+              </span>
+            </p>
+            <span className="hidden sm:block h-px w-8 sm:w-16 bg-gradient-to-l from-transparent to-[#ff1a1a] shrink-0" />
+          </div>
+
           {/* the line-up: plate pairs on the baseline, lit as they go on */}
-          <div className="rule-t relative grid grid-cols-[repeat(6,1fr)] px-[64px]">
-            <div className="rule-r flex h-[84px] flex-col justify-center pr-6">
-              <span className="mono-s text-muted">Bar</span>
-              <span className="stamp-n text-[24px]">{loadBar.barKg} kg</span>
+          <div className="rule-t bg-[#121110] border-t-2 border-white/10 relative grid grid-cols-[repeat(6,1fr)] px-1 sm:px-6 md:px-[64px] shrink-0">
+            <div className="rule-r flex h-[82px] sm:h-[92px] md:h-[96px] flex-col justify-center items-center sm:items-start px-1 sm:px-4 md:px-6 bg-[#161514]/60">
+              <span className="mono-s text-[#ff1a1a] text-[9.5px] sm:text-[11px] md:text-xs uppercase font-extrabold tracking-wider">Bar</span>
+              <span className="stamp-n text-[16px] sm:text-[20px] md:text-[26px] font-black text-white leading-tight mt-0.5">{loadBar.barKg} <span className="text-[10px] sm:text-[12px] text-white/70">kg</span></span>
             </div>
             {plates.map((p, i) => (
-              <div key={p.kg} className={`flex h-[84px] items-center gap-4 px-6 ${i < plates.length - 1 ? "rule-r" : ""}`} data-legend={i}>
-                <span className="h-[44px] w-[12px]" style={{ background: p.color }} />
-                <div>
-                  <span data-tag className="mono-s text-muted">
+              <div key={p.kg} className={`flex h-[82px] sm:h-[92px] md:h-[96px] items-center gap-1.5 sm:gap-3 md:gap-4 px-1.5 sm:px-3 md:px-6 bg-[#161514]/60 ${i < plates.length - 1 ? "rule-r" : ""}`} data-legend={i}>
+                <span className="h-[44px] sm:h-[52px] md:h-[58px] w-[6px] sm:w-[9px] md:w-[13px] shrink-0 rounded-sm shadow-[0_0_8px_rgba(0,0,0,0.5)]" style={{ background: p.color }} />
+                <div className="min-w-0 flex flex-col justify-center">
+                  <span data-tag className="mono-s text-white/60 text-[8.5px] sm:text-[10.5px] md:text-xs block truncate font-bold uppercase tracking-wider">
                     Pair · on
                   </span>
-                  <span className="stamp-n block text-[24px]">2 × {p.kg} kg</span>
+                  <span className="stamp-n block text-[13px] sm:text-[18px] md:text-[24px] font-black whitespace-nowrap text-white leading-tight mt-0.5">2 × {p.kg} <span className="text-[9px] sm:text-[11px] text-white/70">kg</span></span>
                 </div>
               </div>
             ))}

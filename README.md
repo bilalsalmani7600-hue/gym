@@ -110,3 +110,4 @@ CLAUDE.md               ← the playbook Claude Code follows
 | `NavPill` / `Nav` | Floating pill nav / classic bar |
 | `WordmarkFooter` / `Footer` | Huge brand-name footer / classic footer |
 | `Statement` `Stats` `Features` `HorizontalGallery` `Marquee` `Split` `Parallax` `Testimonials` `Cta` | Cinematic stock sections |
+# gym

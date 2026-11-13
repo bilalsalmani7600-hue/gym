@@ -18,11 +18,11 @@ export default function PlanList() {
   const root = useRef<HTMLElement>(null);
 
   return (
-    <section ref={root} id="plans" data-section="Membership" className="band-chalk relative z-[30] px-[64px] pb-[110px] pt-[120px]" data-record-time={2.0} data-record-hold={0.6} data-record-label="plans">
-      <div className="grid grid-cols-[1fr_440px] gap-[64px]">
+    <section ref={root} id="plans" data-section="Membership" className="band-chalk relative z-[30] px-4 sm:px-8 md:px-[64px] py-16 md:pb-[110px] md:pt-[120px]" data-record-time={2.0} data-record-hold={0.6} data-record-label="plans">
+      <div className="flex flex-col lg:grid lg:grid-cols-[1fr_440px] gap-8 md:gap-[64px]">
         <div>
-          <div className="rule-b pb-6">
-            <h2 className="stamp text-[80px]">
+          <div className="rule-b pb-4 md:pb-6">
+            <h2 className="stamp text-[44px] sm:text-[60px] md:text-[80px] leading-[0.9]">
               {plans.title[0]}
               <br />
               {plans.title[1]}
@@ -40,37 +40,41 @@ export default function PlanList() {
                   data-press
                   data-click
                   data-plan={p.id}
-                  className={`plan-row grid h-[92px] transition-colors duration-300 w-full grid-cols-[56px_1fr_auto] items-center border-b-2 border-[var(--rule)] text-left ${on ? "is-on" : ""}`}
+                  className={`plan-row grid min-h-[80px] md:h-[92px] transition-colors duration-300 w-full grid-cols-[36px_1fr_auto] md:grid-cols-[56px_1fr_auto] items-center gap-2 border-b-2 border-[var(--rule)] text-left py-3 md:py-0 ${on ? "is-on" : ""}`}
                 >
-                  <span className={`grid h-[26px] w-[26px] place-items-center border-2 border-[var(--chalk-ink)]`}>
-                    <span className={`h-[12px] w-[12px] transition-transform duration-300 ${on ? "scale-100 bg-[var(--plate-blue)]" : "scale-0 bg-[var(--plate-blue)]"}`} />
+                  <span className={`grid h-[22px] w-[22px] md:h-[26px] md:w-[26px] place-items-center border-2 border-[var(--chalk-ink)]`}>
+                    <span className={`h-[10px] w-[10px] md:h-[12px] md:w-[12px] transition-transform duration-300 ${on ? "scale-100 bg-[var(--plate-blue)]" : "scale-0 bg-[var(--plate-blue)]"}`} />
                   </span>
-                  <span>
-                    <span className="stamp-n block text-[30px]">{p.name}</span>
-                    <span className="mono-s mt-1 block text-[#5b5850]">{p.note}</span>
+                  <span className="pr-2">
+                    <span className="flex items-center gap-2 flex-wrap">
+                      <span className="stamp-n block text-[20px] sm:text-[24px] md:text-[30px]">{p.name}</span>
+                      {p.badge && (
+                        <span className="mono-s text-[9px] sm:text-[10px] px-2 py-0.5 rounded uppercase tracking-wider bg-black/10 border border-black/15 text-[#33312e] font-bold">
+                          {p.badge}
+                        </span>
+                      )}
+                    </span>
+                    <span className="mono-s mt-0.5 md:mt-1 block text-[#5b5850] text-[11px] sm:text-[13px]">{p.note}</span>
                   </span>
-                  <span className="text-right">
-                    <span className="stamp-n block text-[30px] tabular-nums">
+                  <span className="text-right shrink-0">
+                    <span className="stamp-n block text-[20px] sm:text-[24px] md:text-[30px] tabular-nums">
                       <Odo text={inr(p.price)} start="top 85%" duration={1.2} />
                     </span>
-                    <span className="mono-s block text-[#5b5850]">{p.per}</span>
+                    <span className="mono-s block text-[#5b5850] text-[11px] sm:text-[13px]">{p.per}</span>
                   </span>
                 </button>
               );
             })}
-            <div className="grid h-[72px] grid-cols-[56px_1fr_auto] items-center text-[#5b5850]">
-              <span className="mono text-[20px]">+</span>
-              <span className="stamp-n text-[22px]">{plans.addon.name}</span>
-              <span className="mono-s">
-                {plans.addon.price} · {plans.addon.per}
-              </span>
+            <div className="mt-6 border-t border-[var(--rule)] pt-4">
+              <p className="mono-s text-[11px] sm:text-[13px] text-[#5b5850] leading-relaxed">
+                <span className="font-bold text-[#111110]">Note:</span> {plans.disclaimer}
+              </p>
             </div>
-            <p className="mono-s mt-2 text-[#5b5850]">{plans.small}</p>
           </div>
         </div>
 
         {/* total card */}
-        <aside className="self-start bg-[var(--chalk-ink)] p-9 text-[var(--text)]">
+        <aside className="self-start w-full bg-[var(--chalk-ink)] p-6 sm:p-9 text-[var(--text)]">
           <p className="mono-s text-muted">Your plan</p>
           <p className="stamp-n mt-3 text-[34px]">
             <SwapText text={plan.name} />
@@ -81,13 +85,15 @@ export default function PlanList() {
               <RollText text={inr(plan.price)} mode="slide" />
             </p>
             <p className="mono-s mt-1 text-muted">
-              <SwapText text={`${plan.per} · no joining fee`} />
+              <SwapText text={`${plan.per} · no hidden fees`} />
             </p>
           </div>
           <ul className="mono-s mt-8 space-y-3 text-fg/80">
-            <li>· Full floor, 05:00–23:00</li>
-            <li>· Chalk, bands, belts on the house</li>
-            <li>· Induction with a coach</li>
+            <li>· Fully air-conditioned, climate-controlled floor</li>
+            <li>· Secure storage lockers & clean washrooms</li>
+            <li>· Complimentary Wi-Fi & accessible entry</li>
+            <li>· Mon–Sat: 06:00–22:00 (Ladies: 12–2 PM)</li>
+            <li>· Debit cards & UPI / NFC mobile payments</li>
           </ul>
           <Magnet strength={0.12} className="mt-9 w-full">
             <a href="#timetable" className="ibtn ibtn-blue w-full justify-between" data-hover data-join>

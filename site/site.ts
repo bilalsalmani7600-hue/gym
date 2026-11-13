@@ -3,10 +3,10 @@ import type { SiteMeta, Theme } from "@/lib/site";
 // Iron Temple · Day 11 · fictional strength gym (concept site). Direction: site/DESIGN.md.
 
 export const meta: SiteMeta = {
-  name: "Iron Temple",
-  title: "Iron Temple · Strength gym",
-  description: "A strength gym for people who came to lift. Six platforms, real coaching, chalk on the house. Concept website.",
-  loaderText: "Iron Temple",
+  name: "SHAKZ FITNESS CLUB",
+  title: "SHAKZ FITNESS CLUB",
+  description: "GYM | CROSSFIT | PERSONAL TRAINING | CARDIO | WEIGHT LOSS/ GAIN | NUTRITIONIST | LOCKERS",
+  loaderText: "SHAKZ",
   // the site has its own loader (site/components/PlateLoader.tsx, I16): the engine loader is off
   loader: false,
   cursor: true,
@@ -18,7 +18,7 @@ export const theme: Theme = {
   surface: "#1B1A18",
   text: "#ECE9E2",
   muted: "#9B978E",
-  accent: "#2F55E4",
+  accent: "#E50000",
   accentText: "#ECE9E2",
   line: "#34322E",
   fontDisplay: "'Archivo Variable', 'Archivo', sans-serif",

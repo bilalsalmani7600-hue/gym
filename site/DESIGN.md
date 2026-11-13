@@ -44,7 +44,7 @@
 | 8 | Membership | **PR14** radio plan list | PR14 | On the **chalk band** (light). Rows: Day pass ₹499 · Monthly ₹3,499 · Quarterly ₹8,999 · Annual "Lifer" ₹29,999 · + Coaching add-on ₹1,200 / session. A total card on the right, prices in Archivo expanded 48px |
 | 9 | Timetable + booking | **EV06** month-grid calendar (restyled as one week) | EV06 | A dark split-flap board: Mon–Sun columns × 5 time rows (06:00 · 07:30 · 12:30 · 18:00 · 19:30). Classes: Barbell Club, Oly Technique, Engine (conditioning), Strongman Sat, Mobility. Spots left per class; a booking ticket card on the right |
 | 10 | Join band | **CT01** accent band, giant CTA line | CT01 | Blue band, one giant line "FIRST SESSION / ON US." + a chalk button "Book a trial" |
-| 11 | Footer | **FO10** physics pile footer | FO10 | Small plates (the same code-drawn `Plate` component as the signature, rendered to the canvas) and stencilled words (CHALK · REST · REPEAT) fall and pile on the floor line. Links in 3 mono columns, plus "Concept website by Triozen Tech" |
+| 11 | Footer | **FO10** physics pile footer | FO10 | Small plates (the same code-drawn `Plate` component as the signature, rendered to the canvas) and stencilled words (CHALK · REST · REPEAT) fall and pile on the floor line. Links in 3 mono columns, plus "Concept website by Bilal Salmani" |
 
 Cinematic: hero, house rules, floor, signature. Shop-style: programmes, coaches, membership, timetable, join.
 

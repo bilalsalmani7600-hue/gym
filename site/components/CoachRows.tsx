@@ -78,21 +78,21 @@ export default function CoachRows() {
   }, []);
 
   return (
-    <section id="coaches" data-section="Coaches" className="relative z-[20] bg-bg px-[64px] pb-[120px] pt-[120px]" data-record-time={2.0} data-record-hold={0.8} data-record-label="coaches">
+    <section id="coaches" data-section="Coaches" className="relative z-[20] bg-bg px-4 sm:px-8 md:px-[64px] py-16 md:pb-[120px] md:pt-[120px]" data-record-time={2.0} data-record-hold={0.8} data-record-label="coaches">
       {/* the new hard light the coaches come up under (X12) */}
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[60%] w-[60%] -translate-x-1/2 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(236,233,226,0.1),transparent_70%)]" />
       <div data-light className="relative">
-      <div className="rule-b flex items-end justify-between pb-6">
-        <h2 className="stamp text-[88px]">
+      <div className="rule-b flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 md:pb-6">
+        <h2 className="stamp text-[44px] sm:text-[64px] md:text-[88px] leading-[0.9]">
           {coaches.title[0]}
           <br />
           <span className="text-muted">{coaches.title[1]}</span>
         </h2>
-        <p className="max-w-[340px] pb-2 text-[18px] leading-[1.45] text-fg/80">{coaches.sub}</p>
+        <p className="max-w-[340px] pb-2 text-[14px] md:text-[18px] leading-[1.45] text-fg/80">{coaches.sub}</p>
       </div>
 
-      <div ref={table} className="coach-table relative">
-        <div className="grid h-[48px] grid-cols-[minmax(0,5fr)_minmax(0,3fr)_minmax(0,1fr)_minmax(0,5fr)] items-center">
+      <div ref={table} className="coach-table relative mt-6 md:mt-0">
+        <div className="hidden md:grid h-[48px] grid-cols-[minmax(0,5fr)_minmax(0,3fr)_minmax(0,1fr)_minmax(0,5fr)] items-center">
           <span className="mono-s text-muted">Coach · best lifts (kg)</span>
           <span className="mono-s text-muted">Discipline</span>
           <span className="mono-s text-muted">Years</span>
@@ -102,24 +102,34 @@ export default function CoachRows() {
           <div
             key={c.name}
             data-row={k}
-            className={`coach-row grid h-[120px] transition-colors duration-300 grid-cols-[minmax(0,5fr)_minmax(0,3fr)_minmax(0,1fr)_minmax(0,5fr)] items-center border-t-2 border-[var(--rule)] ${k === coaches.items.length - 1 ? "border-b-2" : ""} ${k === active ? "is-active" : ""}`}
+            onClick={() => setActive(k)}
+            className={`coach-row flex flex-col md:grid md:h-[120px] transition-colors duration-300 md:grid-cols-[minmax(0,5fr)_minmax(0,3fr)_minmax(0,1fr)_minmax(0,5fr)] py-4 md:py-0 md:items-center border-t-2 border-[var(--rule)] ${k === coaches.items.length - 1 ? "border-b-2" : ""} ${k === active ? "is-active" : ""}`}
             data-cursor="Gear"
           >
-            <div className="pl-4">
-              <span className="stamp block text-[40px]">{c.name}</span>
-              <span className="mono-s mt-2 block text-muted">{c.lifts}</span>
+            <div className="flex items-center justify-between md:block pl-0 md:pl-4">
+              <div>
+                <span className="stamp block text-[26px] sm:text-[32px] md:text-[40px]">{c.name}</span>
+                <span className="mono-s mt-1 md:mt-2 block text-muted text-[11px] sm:text-[13px]">{c.lifts}</span>
+              </div>
+              {/* Mobile gear thumbnail */}
+              <div className="md:hidden w-16 h-16 shrink-0 rounded-sm overflow-hidden border border-white/20">
+                <img src={c.gear} alt="" className="w-full h-full object-cover" />
+              </div>
             </div>
-            <span className="text-[18px]">{c.role}</span>
-            <span className="mono text-[18px]">{c.years}</span>
+            <div className="mt-2 md:mt-0 flex items-center justify-between md:block">
+              <span className="text-[14px] md:text-[18px] text-white/90">{c.role}</span>
+              <span className="mono text-[13px] md:text-[18px] text-muted md:hidden">{c.years}</span>
+            </div>
+            <span className="hidden md:block mono text-[18px]">{c.years}</span>
             <span />
           </div>
         ))}
 
-        {/* the gear frame (3:4) that follows the pointer, riding in the right column */}
+        {/* the gear frame (3:4) that follows the pointer, riding in the right column on desktop */}
         <div
           aria-hidden
           ref={frame}
-          className="coach-frame pointer-events-none absolute left-0 top-0 z-10 w-[300px] [html.is-static_&]:left-auto [html.is-static_&]:right-[110px] [html.is-static_&]:top-[40px]"
+          className="coach-frame pointer-events-none hidden md:block absolute left-0 top-0 z-10 w-[300px]"
         >
           <div className="bezel">
             <div className="bezel-inner relative aspect-[3/4]">

@@ -49,19 +49,19 @@ export default function FlapBoard() {
   }, [pick.day, pick.time]);
 
   return (
-    <section ref={root} id="timetable" data-section="Timetable" className="relative z-[30] bg-bg px-[64px] pb-[110px] pt-[120px]" data-record-time={2.0} data-record-hold={0.3} data-record-label="timetable">
-      <div className="rule-b mb-8 flex items-end justify-between pb-6">
-        <h2 className="stamp text-[80px]">
+    <section ref={root} id="timetable" data-section="Timetable" className="relative z-[30] bg-bg px-4 sm:px-8 md:px-[64px] py-16 md:pb-[110px] md:pt-[120px]" data-record-time={2.0} data-record-hold={0.3} data-record-label="timetable">
+      <div className="rule-b mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-4 md:pb-6">
+        <h2 className="stamp text-[44px] sm:text-[60px] md:text-[80px] leading-[0.9]">
           {timetable.title[0]}
           <br />
           {timetable.title[1]}
         </h2>
-        <p className="mono-s pb-2 text-muted">Week 41 · live spots · tap a class to book</p>
+        <p className="mono-s pb-1 text-muted text-[11px] sm:text-[13px]">Week 41 · live spots · tap a class to book</p>
       </div>
 
-      <div className="grid grid-cols-[1fr_300px] gap-[32px]">
-        <div className="board bg-[#0c0c0b] p-3" role="table" aria-label="Weekly timetable">
-          <div className="grid grid-cols-[72px_repeat(7,1fr)] gap-[4px]">
+      <div className="flex flex-col lg:grid lg:grid-cols-[1fr_300px] gap-6 md:gap-[32px]">
+        <div className="board bg-[#0c0c0b] p-3 overflow-x-auto" role="table" aria-label="Weekly timetable">
+          <div className="min-w-[620px] grid grid-cols-[64px_repeat(7,1fr)] gap-[4px]">
             <span />
             {days.map((d) => (
               <span key={d} className="mono-s py-2 text-center text-muted">

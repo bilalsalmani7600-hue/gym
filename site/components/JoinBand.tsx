@@ -32,17 +32,17 @@ export default function JoinBand() {
   }, []);
 
   return (
-    <section id="join" data-section="Join" className="band-blue relative z-[32] overflow-hidden px-[64px] py-[120px]" data-record-time={1.8} data-record-label="join">
-      <div className="flex items-end justify-between gap-10">
-        <h2 ref={words} className="extrude stamp text-[150px]" style={{ ["--ex" as string]: 1 }}>
+    <section id="join" data-section="Join" className="band-blue relative z-[32] overflow-hidden px-4 sm:px-8 md:px-[64px] py-16 md:py-[120px]" data-record-time={1.8} data-record-label="join">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-10">
+        <h2 ref={words} className="extrude stamp text-[52px] sm:text-[90px] md:text-[150px] leading-[0.9]" style={{ ["--ex" as string]: 1 }}>
           {join.lines[0]}
           <br />
           {join.lines[1]}
         </h2>
-        <div className="flex flex-col items-end gap-5 pb-4">
-          <p className="mono-s max-w-[260px] text-right text-fg">{join.sub}</p>
+        <div className="flex flex-col items-start md:items-end gap-4 md:gap-5 pb-2 md:pb-4">
+          <p className="mono-s max-w-[280px] text-left md:text-right text-fg text-[12px] sm:text-[13px]">{join.sub}</p>
           <Magnet strength={0.3}>
-            <a href="#plans" className="ibtn ibtn-chalk press3d-chalk px-10" data-cursor="Book" data-hover data-press data-join-cta>
+            <a href="#plans" className="ibtn ibtn-chalk press3d-chalk px-8 md:px-10" data-cursor="Book" data-hover data-press data-join-cta>
               <span data-magnet-label className="inline-flex items-center gap-[14px]">
                 {join.cta} <span className="arrow" />
               </span>

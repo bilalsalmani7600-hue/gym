@@ -62,7 +62,7 @@ export default function Cursor() {
 
   if (!enabled) return null;
   return (
-    <div className="cursor-layer pointer-events-none fixed inset-0 z-[90] [html.is-recording_&]:hidden" aria-hidden>
+    <div className="cursor-layer pointer-events-none fixed inset-0 z-[90]" aria-hidden>
       <div ref={ring} className="absolute -left-[18px] -top-[18px] flex h-9 w-9 opacity-0 items-center justify-center rounded-full border border-accent">
         <span className="text-[5px] uppercase tracking-[0.2em] text-accent-fg">{label}</span>
       </div>

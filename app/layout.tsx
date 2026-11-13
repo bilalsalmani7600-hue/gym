@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { CSSProperties } from "react";
 import "./globals.css";
 import "@/site/fonts";
@@ -8,6 +8,19 @@ import { meta, theme } from "@/site/site";
 export const metadata: Metadata = {
   title: meta.title,
   description: meta.description,
+  icons: {
+    icon: [
+      { url: "/images/iron-temple/logo-trim.png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/images/iron-temple/logo-trim.png",
+    apple: "/images/iron-temple/logo-trim.png",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

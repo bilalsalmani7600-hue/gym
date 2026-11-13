@@ -29,6 +29,7 @@ export default function LiftPin({
   loadWhen,
   intro,
   sectionName,
+  autoplay = false,
 }: {
   id: string;
   film: Film;
@@ -52,13 +53,14 @@ export default function LiftPin({
   intro?: { to: number; secs: number };
   /** name shown in the nav's REP cell */
   sectionName?: string;
+  autoplay?: boolean;
 }) {
   const outer = useRef<HTMLElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const player = useFilm(film.frames, canvas, { eager, blockLoader, initial: film.start, place, loadWhen });
   const cb = useRef(onTime);
   cb.current = onTime;
-  const pinVh = filmPinVh(film);
+  const pinVh = autoplay ? 0 : filmPinVh(film);
 
   useEffect(() => {
     if (playerRef) playerRef.current = player.current;
@@ -76,21 +78,40 @@ export default function LiftPin({
       cb.current?.(t, p);
     };
     apply(0);
-    const st = ScrollTrigger.create({
-      trigger: outer.current!,
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: (self) => apply(self.progress),
-      onRefresh: (self) => apply(self.progress),
-    });
-    const offIntro = intro
-      ? onPlateLifting(() => {
+
+    let offPlay = () => {};
+    let st: ScrollTrigger | null = null;
+
+    if (autoplay) {
+      offPlay = onPlateLifting(() => {
+        gsap.to(auto, {
+          t: film.poster,
+          duration: 3.4,
+          ease: "power1.inOut",
+          onUpdate: () => {
+            player.current.seekTime(auto.t);
+            cb.current?.(auto.t, auto.t / film.poster);
+          },
+        });
+      });
+    } else {
+      st = ScrollTrigger.create({
+        trigger: outer.current!,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => apply(self.progress),
+        onRefresh: (self) => apply(self.progress),
+      });
+      offPlay = intro
+        ? onPlateLifting(() => {
           gsap.to(auto, { t: intro.to, duration: intro.secs, ease: "none", onUpdate: () => apply(lastP) /* linear (lesson 64) */ });
         })
-      : () => {};
+        : () => { };
+    }
+
     return () => {
-      offIntro();
-      st.kill();
+      offPlay();
+      st?.kill();
     };
   }, [film, player, playerRef, intro]);
 

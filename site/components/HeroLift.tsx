@@ -3,7 +3,7 @@
 // Hero · The lift (layout HR01 split hero + strip, restyled: the film is full-bleed, the headline sits on its dark
 // left third, the logo strip became a ruled spec strip). Motion M142 (Round 2): HEAVY gains weight + width with the
 // bar's height in the film (--heavy 0 → 1). ?static=1 shows the lockout still and HEAVY at full weight.
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onPlateLifting } from "@/site/lib/plate";
 import LiftPin from "./LiftPin";
@@ -32,7 +32,16 @@ export const heavyAt = (t: number) => Math.min(1, Math.max(0, t - 1));
  *  camera keeps creeping in through the lockout hold too. 1 → 1.08 over the whole film. */
 const pushAt = (t: number) => 1 + 0.08 * Math.min(1, Math.max(0, t / 4));
 
+const SPEC_CARDS = [
+  { label: "FLOOR", val: "2,400", sub: "SQ FT", valClass: "text-[16px] sm:text-[19px]" },
+  { label: "PLATFORMS", val: "6", sub: "OAK", valClass: "text-[21px] sm:text-[25px]" },
+  { label: "RACKS", val: "10", sub: "ROGUE", valClass: "text-[24px] sm:text-[28px]" },
+  { label: "DUMBBELLS", val: "TO 60 KG", sub: "", valClass: "text-[11px] sm:text-[13px]" },
+  { label: "OPEN", val: "08:00–22:00", sub: "", valClass: "text-[9.5px] sm:text-[11.5px] tracking-tight" },
+];
+
 export default function HeroLift() {
+  const [activeCard, setActiveCard] = useState(2);
   const words = useRef<HTMLDivElement>(null);
   const media = useRef<HTMLElement[]>([]);
   const onTime = useCallback((t: number) => {
@@ -73,28 +82,152 @@ export default function HeroLift() {
       eager
       blockLoader
       onTime={onTime}
-      intro={{ to: 2, secs: 4 }}
+      autoplay
       canvasClass="lift-canvas lift-media absolute inset-0 h-full w-full origin-[66%_48%]"
       place={() => ({ fade: { l: 0.04, r: 0.04, t: 0.06, b: 0.1 } })}
       before={
         // the lockout still: poster while the frames load, and the ?static=1 picture
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/images/iron-temple/hero-end.webp" alt="" className="lift-media absolute inset-0 h-full w-full origin-[66%_48%] object-cover" />
+        <img src="/images/iron-temple/image copy.png" alt="" className="lift-media absolute inset-0 h-full w-full origin-[66%_48%] object-cover" />
       }
     >
-      {/* soft dark pool behind the words only (lesson 16) */}
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-[52%] bg-[linear-gradient(90deg,rgba(17,17,16,0.86),rgba(17,17,16,0.55)_55%,transparent)]" />
+      {/* Mobile iOS ambient atmosphere: clear top for lifter, rich dark vignette at bottom left for text readability */}
+      <div 
+        aria-hidden 
+        className="pointer-events-none absolute inset-0 md:hidden bg-[linear-gradient(180deg,rgba(10,10,10,0.35)_0%,rgba(10,10,10,0.08)_28%,rgba(10,10,10,0.65)_58%,rgba(10,10,10,0.94)_88%,#0a0a0a_100%)]" 
+      />
 
-      <div ref={intro} className="contents">
-      <div className="absolute inset-x-0 top-[96px] bottom-[96px] flex flex-col justify-center px-[64px]">
-        <p data-in="rest" className="mono-s mb-7 text-muted">Iron Temple · Strength gym · Est. 2019</p>
-        <div ref={words} className="hero-words" style={{ ["--heavy" as string]: 1 }}>
-          <h1 className="text-[clamp(72px,10vw,150px)]">
-            <span className="block overflow-hidden pb-[0.04em]">
-              <span data-in="lift" className="stamp block">{hero.lines[0]}</span>
+      {/* Desktop soft dark pool behind the words only */}
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 hidden md:block w-[52%] bg-[linear-gradient(90deg,rgba(17,17,16,0.86),rgba(17,17,16,0.55)_55%,transparent)]" />
+
+      {/* MOBILE HERO VIEW (Modern iOS Glassy - Bottom Left Aligned) */}
+      <div className="md:hidden absolute inset-0 z-20 flex flex-col justify-end pt-[68px] pb-3.5 px-3.5 pointer-events-none">
+        {/* Hero Content Block (Bottom Left) */}
+        <div className="pointer-events-auto flex flex-col items-start mb-5 sm:mb-6">
+          {/* Logo before MAKE BODY STRONGER */}
+          <div className="flex items-center -ml-1 mb-1">
+            <img 
+              src="/images/iron-temple/logo-trim.png" 
+              alt="SHAKZ FITNESS CLUB" 
+              className="w-[180px] xs:w-[210px] sm:w-[240px] h-auto object-contain object-left drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]" 
+            />
+          </div>
+
+          {/* Headline: MAKE BODY STRONGER */}
+          <h1 className="stamp italic text-[44px] xs:text-[50px] sm:text-[58px] leading-[0.85] tracking-tight mt-1">
+            <span 
+              className="block text-transparent" 
+              style={{ 
+                WebkitTextStroke: "2.5px #ff2626", 
+                filter: "drop-shadow(0 0 18px rgba(255,38,38,0.5))" 
+              }}
+            >
+              {hero.lines[0]}
             </span>
-            <span className="heavy-word block">{hero.lines[1]}</span>
-            <span data-in="rest" className="stamp-n mt-4 block text-[0.42em] text-muted">{hero.lines[2]}</span>
+            <span className="block text-white mt-0.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+              {hero.lines[1]}
+            </span>
+          </h1>
+
+          {/* Disciplines & Services Text (No card, pure text) */}
+          <div className="mt-3 flex flex-col gap-1 text-[11px] sm:text-[12px] font-mono tracking-wider text-white uppercase font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+            <div className="flex flex-wrap items-center gap-x-2">
+              <span>GYM</span>
+              <span className="w-1 h-1 rounded-full bg-[#ff1a1a] shadow-[0_0_6px_#ff1a1a]" />
+              <span>CROSSFIT</span>
+              <span className="w-1 h-1 rounded-full bg-[#ff1a1a] shadow-[0_0_6px_#ff1a1a]" />
+              <span>PERSONAL TRAINING</span>
+              <span className="w-1 h-1 rounded-full bg-[#ff1a1a] shadow-[0_0_6px_#ff1a1a]" />
+              <span>CARDIO</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-2 text-white/85">
+              <span>WEIGHT LOSS / GAIN</span>
+              <span className="w-1 h-1 rounded-full bg-[#ff1a1a] shadow-[0_0_6px_#ff1a1a]" />
+              <span>NUTRITIONIST</span>
+              <span className="w-1 h-1 rounded-full bg-[#ff1a1a] shadow-[0_0_6px_#ff1a1a]" />
+              <span>LOCKERS</span>
+            </div>
+          </div>
+
+          {/* iOS Liquid Glass Action Button - pushed up with margin */}
+          <a 
+            href="#plans" 
+            className="ios-glass-btn mt-3.5 mb-2 sm:mb-3 group inline-flex items-center gap-3 px-6 py-2.5 rounded-full text-[13px] font-sans font-black tracking-wider text-white uppercase shadow-[0_4px_20px_rgba(255,26,26,0.4)]"
+          >
+            <span>BOOK A TRIAL</span>
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-black/30 backdrop-blur-md text-white text-[11px] group-hover:translate-x-0.5 transition-transform">
+              →
+            </span>
+          </a>
+        </div>
+
+        {/* Bottom Spec Dock (iOS Control Center / Floating Glass Shelf) */}
+        <div className="pointer-events-auto flex flex-col items-center gap-2.5 w-full">
+          <div className="ios-glass-panel w-full p-2 rounded-2xl">
+            <div className="grid grid-cols-5 gap-1.5 w-full">
+              {SPEC_CARDS.map((spec, i) => {
+                const isActive = activeCard === i;
+                return (
+                  <button
+                    key={spec.label}
+                    type="button"
+                    onClick={() => setActiveCard(i)}
+                    className={`ios-stat-card py-2 px-1 min-h-[74px] sm:min-h-[82px] flex flex-col justify-between items-center text-center cursor-pointer select-none ${
+                      isActive ? "is-active" : ""
+                    }`}
+                  >
+                    <span className={`mono-s block text-[9.5px] sm:text-[11px] font-bold tracking-wider leading-tight ${isActive ? "text-white" : "text-white/70"}`}>
+                      {spec.label}
+                    </span>
+                    <span className={`stamp-n block ${spec.valClass} font-black text-white leading-none my-auto whitespace-nowrap`}>
+                      {spec.val}
+                    </span>
+                    <span className={`mono-s block text-[8px] sm:text-[9.5px] font-semibold leading-tight ${isActive ? "text-white/95" : "text-white/60"} ${spec.sub ? "" : "invisible"}`}>
+                      {spec.sub || "—"}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 3 Pagination Indicator Dots */}
+          <div className="flex items-center gap-1.5">
+            {[0, 1, 2].map((dotIdx) => {
+              const isDotActive = 
+                (dotIdx === 0 && activeCard < 2) || 
+                (dotIdx === 1 && activeCard === 2) || 
+                (dotIdx === 2 && activeCard > 2);
+              return (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setActiveCard(dotIdx === 0 ? 0 : dotIdx === 1 ? 2 : 4)}
+                  aria-label={`Show slide ${dotIdx + 1}`}
+                  className={`transition-all duration-300 rounded-full cursor-pointer focus:outline-none ${
+                    isDotActive
+                      ? "w-6 h-1.5 bg-[#ff1a1a] shadow-[0_0_12px_rgba(255,26,26,0.95)]"
+                      : "w-1.5 h-1.5 bg-white/30 hover:bg-white/50"
+                  }`}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* DESKTOP HERO VIEW */}
+      <div ref={intro} className="hidden md:contents">
+      <div className="absolute inset-x-0 top-[96px] bottom-[96px] flex flex-col justify-center px-[64px]">
+        <div data-in="rest" className="-mb-16 w-[550px] h-[160px] flex-shrink-0 flex items-center justify-start overflow-hidden rounded-sm">
+          <img src="/images/iron-temple/logo.png" alt="SHAKZ FITNESS CLUB logo" className="w-full h-full object-contain object-left" />
+        </div>
+        <div ref={words} className="hero-words">
+          <h1 className="text-[clamp(64px,10vw,150px)] font-sans italic font-black uppercase leading-[0.85] tracking-tight">
+            <span className="block overflow-hidden pb-[0.04em]">
+              <span data-in="lift" className="block text-transparent" style={{ WebkitTextStroke: "2px var(--plate-red)" }}>{hero.lines[0]}</span>
+            </span>
+            <span data-in="lift" className="block text-white mt-1">{hero.lines[1]}</span>
           </h1>
         </div>
         <p data-in="rest" className="mt-8 max-w-[420px] text-[18px] leading-[1.5] text-fg/85">{hero.sub}</p>

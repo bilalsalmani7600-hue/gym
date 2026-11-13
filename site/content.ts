@@ -2,29 +2,30 @@
 
 export const IMG = "/images/iron-temple";
 
-export const studio = "Triozen Tech";
+export const studio = "BILAL SALMANI";
 
 export const nav = {
-  brand: "Iron Temple",
+  brand: "SHAKZ FITNESS CLUB",
   links: [
     { label: "Programmes", href: "#programmes" },
     { label: "Floor", href: "#floor" },
     { label: "Coaches", href: "#coaches" },
     { label: "Plans", href: "#plans" },
     { label: "Timetable", href: "#timetable" },
+    { label: "Contact", href: "#footer" },
   ],
   cta: "Book a trial",
 };
 
 export const hero = {
-  lines: ["Lift", "Heavy.", "Rest. Repeat."],
-  sub: "A strength gym for people who came to lift. Six platforms, real coaching, chalk on the house.",
+  lines: ["MAKE BODY", "STRONGER"],
+  sub: "GYM | CROSSFIT | PERSONAL TRAINING | CARDIO | WEIGHT LOSS/ GAIN | NUTRITIONIST | LOCKERS",
   strip: [
     { k: "Floor", v: "2,400 sq ft" },
     { k: "Platforms", v: "6" },
     { k: "Racks", v: "10" },
     { k: "Dumbbells", v: "to 60 kg" },
-    { k: "Open", v: "05:00–23:00" },
+    { k: "Open", v: "08:00–22:00" },
   ],
   cta: "Book a trial",
 };
@@ -35,14 +36,66 @@ export const rules = {
 };
 
 export const programmes = {
-  title: ["Four ways", "to get strong."],
+  title: ["Core Services &", "Training Programs."],
   items: [
-    { name: "Strength", img: "/images/iron-temple/prog-strength.webp", weeks: "12 weeks", sessions: "4 / week", focus: "Squat · Bench · Deadlift", note: "Linear blocks, tested every 4th week." },
-    { name: "Olympic Lifting", img: "/images/iron-temple/prog-oly.webp", weeks: "10 weeks", sessions: "3 / week", focus: "Snatch · Clean & jerk", note: "Technique first, then load." },
-    { name: "Hypertrophy", img: "/images/iron-temple/prog-hypertrophy.webp", weeks: "8 weeks", sessions: "5 / week", focus: "Volume · Tempo · Pump", note: "Built for size, logged to the gram." },
-    { name: "Conditioning", img: "/images/iron-temple/prog-conditioning.webp", weeks: "6 weeks", sessions: "3 / week", focus: "Sled · Rower · Carries", note: "An engine for the heavy days." },
+    {
+      name: "Strength & Weight Training",
+      img: "/images/iron-temple/prog-strength.webp",
+      weeks: "All Levels",
+      sessions: "Open Floor",
+      focus: "Squat Racks · Cables · Resistance Machines",
+      note: "Full range of free weights, squat racks, cables, and resistance machines for hypertrophy and functional strength.",
+    },
+    {
+      name: "Cardio & Conditioning",
+      img: "/images/iron-temple/prog-conditioning.webp",
+      weeks: "Endurance",
+      sessions: "Daily Access",
+      focus: "Treadmills · Stamina · Heart Health",
+      note: "Dedicated cardio zone with treadmills and endurance equipment to boost stamina and heart health.",
+    },
+    {
+      name: "CrossFit & Functional Workouts",
+      img: "/images/iron-temple/prog-oly.webp",
+      weeks: "High Intensity",
+      sessions: "HIIT Sessions",
+      focus: "Intervals · Calorie Burn · Agility",
+      note: "High-intensity interval and functional training sessions designed to burn calories and improve agility.",
+    },
+    {
+      name: "Personal Training (1-on-1)",
+      img: "/images/iron-temple/coach-wraps.webp",
+      weeks: "Tailored Plan",
+      sessions: "1-on-1 Coach",
+      focus: "Form Correction · Progress Tracking",
+      note: "Tailored workout programming, form correction, and progress tracking with certified coaches.",
+    },
+    {
+      name: "Body Transformation & Nutrition",
+      img: "/images/iron-temple/prog-hypertrophy.webp",
+      weeks: "Goal Based",
+      sessions: "Custom Diet",
+      focus: "Fat Loss · Lean Muscle Gain",
+      note: "Customized diet plans and nutrition counseling built around fat loss or lean muscle gain.",
+    },
+    {
+      name: "Zumba & Group Fitness",
+      img: "/images/iron-temple/floor-turf.webp",
+      weeks: "High Energy",
+      sessions: "Group Aerobics",
+      focus: "Dance Fitness · Aerobics · Cardio",
+      note: "High-energy group dance and aerobic sessions.",
+    },
+    {
+      name: "Dedicated Ladies Batch",
+      img: "/images/iron-temple/coach-belt.webp",
+      weeks: "Mon – Sat",
+      sessions: "12:00 – 2:00 PM",
+      focus: "Exclusive Women-Only Slot",
+      note: "Exclusive women-only workout hours daily from 12:00 PM to 2:00 PM with certified guidance and full privacy.",
+    },
   ],
-  tag: "Included in Monthly and up",
+  tag: "Shakz Fitness Club · Hampankatta",
 };
 
 export const floor = {
@@ -57,6 +110,29 @@ export const floor = {
     { name: "Recovery", img: "/images/iron-temple/floor-recovery.webp", n: "4", unit: "°C" },
   ],
 };
+
+export const amenities = [
+  {
+    title: "Climate-Controlled Floor",
+    desc: "Fully air-conditioned workout space.",
+    tag: "AC Floor",
+  },
+  {
+    title: "Locker & Restroom Access",
+    desc: "Secure storage lockers and clean washroom facilities.",
+    tag: "Lockers",
+  },
+  {
+    title: "Member Perks",
+    desc: "Complimentary Wi-Fi, first-aid support, and wheelchair-accessible entry.",
+    tag: "Wi-Fi & Perks",
+  },
+  {
+    title: "Accepted Payments",
+    desc: "Debit cards and UPI / NFC mobile payments.",
+    tag: "UPI / Cards",
+  },
+];
 
 /** Competition plates (IWF colours). thick/height in mm: bumpers share one 450 mm diameter. */
 export const plates = [
@@ -79,25 +155,52 @@ export const coaches = {
   title: ["Coaches.", "No ego."],
   sub: "Every coach still competes. Their gear tells you more than a headshot would.",
   items: [
-    { name: "Arjun Rao", role: "Head of strength", lifts: "DL 260 · SQ 205 · BP 140", gear: "/images/iron-temple/coach-belt.webp", years: "14 yrs" },
-    { name: "Meera Iyer", role: "Olympic lifting", lifts: "SN 82 · C&J 104", gear: "/images/iron-temple/coach-shoes.webp", years: "9 yrs" },
-    { name: "Kabir Sethi", role: "Powerlifting", lifts: "DL 290 · SQ 240 · BP 165", gear: "/images/iron-temple/coach-wraps.webp", years: "11 yrs" },
+    { name: "Rameez Miz", role: "Head of strength", lifts: "DL 260 · SQ 205 · BP 140", gear: "/images/iron-temple/ramish.jpeg", years: "14 yrs" },
+    { name: "Meera Iyer", role: "Olympic lifting", lifts: "SN 82 · C&J 104", gear: "/images/iron-temple/unnamed.jpg", years: "9 yrs" },
+    { name: "Ismail Thufail", role: "Powerlifting", lifts: "DL 290 · SQ 240 · BP 165", gear: "/images/iron-temple/image.png", years: "11 yrs" },
     { name: "Tara Menon", role: "Programming + conditioning", lifts: "DL 180 · Row 2k 7:02", gear: "/images/iron-temple/coach-logbook.webp", years: "8 yrs" },
   ],
 };
 
 export const plans = {
-  title: ["Pick your", "membership."],
+  title: ["Membership", "plans."],
   items: [
-    { id: "day", name: "Day pass", price: 499, per: "one day", note: "Full floor, chalk included" },
-    { id: "month", name: "Monthly", price: 3499, per: "per month", note: "Floor + all programmes" },
-    { id: "quarter", name: "Quarterly", price: 8999, per: "3 months", note: "Save ₹1,498 · one form check a month" },
-    { id: "lifer", name: "Annual “Lifer”", price: 29999, per: "12 months", note: "Save ₹11,989 · locker + 4 coached sessions" },
+    {
+      id: "1m",
+      name: "1 Month",
+      badge: "Standard",
+      price: 1500,
+      per: "1 month",
+      note: "Beginners or short-term visitors",
+    },
+    {
+      id: "4m",
+      name: "4 Months",
+      badge: "Promo Package",
+      price: 4000,
+      per: "4 months",
+      note: "Building a consistent routine · ₹1,000 / mo",
+    },
+    {
+      id: "8m",
+      name: "8 Months",
+      badge: "Promo Package",
+      price: 6000,
+      per: "8 months",
+      note: "Medium-term body transformation · ₹750 / mo",
+    },
+    {
+      id: "12m",
+      name: "12 Months",
+      badge: "Annual Promo",
+      price: 8000,
+      per: "12 months",
+      note: "Best overall value for long-term fitness · ₹667 / mo",
+    },
   ],
-  addon: { name: "Coaching add-on", price: "₹1,200", per: "per 1:1 session" },
-  selected: "month",
+  selected: "4m",
   cta: "Join now",
-  small: "No joining fee. Freeze up to 30 days a year.",
+  disclaimer: "Promotional bundle rates apply during seasonal offers. Personal training is billed separately.",
 };
 
 export const timetable = {
@@ -113,16 +216,40 @@ export const timetable = {
     [0, 4, "Mobility", 12], [2, 4, "Mobility", 11], [5, 3, "Open Platform", 6], [6, 1, "Mobility", 12],
   ] as [number, number, string, number][],
   pick: { day: 3, time: 0 },
-  ticket: { platform: "Platform 4", coach: "Arjun Rao" },
+  ticket: { platform: "Platform 4", coach: "Rameez Miz" },
 };
 
 export const join = { lines: ["First session", "on us."], cta: "Book a trial", sub: "Bring shoes. We have the chalk." };
 
+export const contact = {
+  name: "SHAKZ FITNESS CLUB",
+  address: "Crystal Arc Building, Ground Floor, Balmatta Road, Beside Roopa Hotel & Opposite KTM Showroom, Hampankatta, Mangaluru, Karnataka 575001",
+  addressLine1: "Crystal Arc Building, Ground Floor",
+  addressLine2: "Balmatta Road, Hampankatta",
+  addressLandmark: "Beside Roopa Hotel & Opposite KTM Showroom",
+  addressCity: "Mangaluru, Karnataka 575001",
+  mapsUrl: "https://maps.google.com/?q=Shakz+Fitness+Club+Crystal+Arc+Building+Balmatta+Road+Hampankatta+Mangaluru+Karnataka+575001",
+  websiteUrl: "https://google.com",
+  phones: [
+    { display: "+91 99804 05656", href: "tel:+919980405656", wa: "https://wa.me/919980405656" },
+    { display: "+91 84978 15656", href: "tel:+918497815656", wa: "https://wa.me/918497815656" },
+  ],
+  instagram: {
+    handle: "@shakz_fitnessclub",
+    url: "https://www.instagram.com/shakz_fitnessclub/?hl=en",
+  },
+  hours: {
+    days: "Monday – Saturday",
+    general: "6:00 AM – 10:00 PM",
+    ladies: "12:00 PM – 2:00 PM (Monday – Saturday)",
+    sunday: "Closed",
+  },
+};
+
 export const footer = {
   cols: [
-    { t: "Train", l: ["Programmes", "Timetable", "Coaching", "Open platform"] },
-    { t: "Visit", l: ["The floor", "Hours 05:00–23:00", "Parking", "Day pass"] },
-    { t: "Members", l: ["Plans", "Freeze membership", "Locker hire", "Contact"] },
+    { t: "Programmes", l: ["Strength", "Olympic Lifting", "Hypertrophy", "Conditioning"] },
+    { t: "Quick Links", l: ["The floor", "Coaches", "Membership Plans", "Timetable"] },
   ],
-  words: ["CHALK", "REST", "REPEAT", "LIFT", "EAT"],
+  words: ["SHAKZ", "SHAKZ", "SHAKZ"],
 };
