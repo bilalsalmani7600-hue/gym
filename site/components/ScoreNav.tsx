@@ -62,7 +62,7 @@ export default function ScoreNav() {
         {/* Brand Logo */}
         <a href="#lift" className="flex items-center group transition-transform duration-200 hover:scale-[1.02]">
           <img 
-            src="/images/iron-temple/logo-trim.png" 
+            src="/images/iron-temple/logo-trim.webp" 
             alt="SHAKZ FITNESS CLUB logo" 
             className="h-[40px] w-auto object-contain object-left drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]" 
           />
@@ -128,7 +128,7 @@ export default function ScoreNav() {
           {/* Logo */}
           <a href="#lift" className="flex items-center active:scale-95 transition-transform">
             <img 
-              src="/images/iron-temple/logo-trim.png" 
+              src="/images/iron-temple/logo-trim.webp" 
               alt="SHAKZ FITNESS CLUB logo" 
               className="h-[36px] w-auto object-contain object-left drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]" 
             />

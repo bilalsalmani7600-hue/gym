@@ -95,12 +95,12 @@ export default function PlateLoader() {
       <div className="loader-dust absolute inset-0 opacity-20" />
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
         <img 
-          src="/images/iron-temple/image copy.png" 
+          src="/images/iron-temple/image copy.webp" 
           alt="" 
           className="absolute inset-0 w-full h-full object-cover"
         />
         <img 
-          src="/images/iron-temple/loader-hero-transparent.png" 
+          src="/images/iron-temple/loader-hero-transparent.webp" 
           alt="" 
           className="relative h-[72vh] md:h-[75vh] object-contain mt-32 md:mt-48 z-10"
         />
@@ -110,7 +110,7 @@ export default function PlateLoader() {
       <div className="md:hidden absolute inset-x-0 top-0 pt-7 px-4 flex flex-col items-center text-center z-20">
         <div className="flex items-center justify-center mb-1">
           <img 
-            src="/images/iron-temple/logo-trim.png" 
+            src="/images/iron-temple/logo-trim.webp" 
             alt="SHAKZ FITNESS CLUB logo" 
             className="w-[160px] xs:w-[190px] sm:w-[220px] h-auto object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]" 
           />
@@ -146,7 +146,7 @@ export default function PlateLoader() {
       {/* DESKTOP LAYOUT */}
       <div className="hidden md:flex absolute left-[64px] top-[56px] flex-col gap-0 z-20">
         <div className="mb-2 flex items-center justify-start">
-           <img src="/images/iron-temple/logo-trim.png" alt="SHAKZ FITNESS CLUB logo" className="w-[280px] h-auto object-contain object-left" />
+           <img src="/images/iron-temple/logo-trim.webp" alt="SHAKZ FITNESS CLUB logo" className="w-[280px] h-auto object-contain object-left" />
         </div>
         <div>
           <p 

@@ -88,7 +88,7 @@ export default function HeroLift() {
       before={
         // the lockout still: poster while the frames load, and the ?static=1 picture
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/images/iron-temple/image copy.png" alt="" className="lift-media absolute inset-0 h-full w-full origin-[66%_48%] object-cover" />
+        <img src="/images/iron-temple/image copy.webp" alt="" className="lift-media absolute inset-0 h-full w-full origin-[66%_48%] object-cover" />
       }
     >
       {/* Mobile iOS ambient atmosphere: clear top for lifter, rich dark vignette at bottom left for text readability */}
@@ -107,7 +107,7 @@ export default function HeroLift() {
           {/* Logo before MAKE BODY STRONGER */}
           <div className="flex items-center -ml-1 mb-1">
             <img 
-              src="/images/iron-temple/logo-trim.png" 
+              src="/images/iron-temple/logo-trim.webp" 
               alt="SHAKZ FITNESS CLUB" 
               className="w-[180px] xs:w-[210px] sm:w-[240px] h-auto object-contain object-left drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]" 
             />
@@ -220,7 +220,7 @@ export default function HeroLift() {
       <div ref={intro} className="hidden md:contents">
       <div className="absolute inset-x-0 top-[96px] bottom-[96px] flex flex-col justify-center px-[64px]">
         <div data-in="rest" className="-mb-16 w-[550px] h-[160px] flex-shrink-0 flex items-center justify-start overflow-hidden rounded-sm">
-          <img src="/images/iron-temple/logo.png" alt="SHAKZ FITNESS CLUB logo" className="w-full h-full object-contain object-left" />
+          <img src="/images/iron-temple/logo.webp" alt="SHAKZ FITNESS CLUB logo" className="w-full h-full object-contain object-left" />
         </div>
         <div ref={words} className="hero-words">
           <h1 className="text-[clamp(64px,10vw,150px)] font-sans italic font-black uppercase leading-[0.85] tracking-tight">

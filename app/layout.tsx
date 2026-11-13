@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   description: meta.description,
   icons: {
     icon: [
-      { url: "/images/iron-temple/logo-trim.png" },
+      { url: "/images/iron-temple/logo-trim.webp" },
       { url: "/favicon.ico" },
     ],
-    shortcut: "/images/iron-temple/logo-trim.png",
-    apple: "/images/iron-temple/logo-trim.png",
+    shortcut: "/images/iron-temple/logo-trim.webp",
+    apple: "/images/iron-temple/logo-trim.webp",
   },
 };
 

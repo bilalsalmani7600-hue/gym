@@ -155,9 +155,9 @@ export const coaches = {
   title: ["Coaches.", "No ego."],
   sub: "Every coach still competes. Their gear tells you more than a headshot would.",
   items: [
-    { name: "Rameez Miz", role: "Head of strength", lifts: "DL 260 · SQ 205 · BP 140", gear: "/images/iron-temple/ramish.jpeg", years: "14 yrs" },
-    { name: "Meera Iyer", role: "Olympic lifting", lifts: "SN 82 · C&J 104", gear: "/images/iron-temple/unnamed.jpg", years: "9 yrs" },
-    { name: "Ismail Thufail", role: "Powerlifting", lifts: "DL 290 · SQ 240 · BP 165", gear: "/images/iron-temple/image.png", years: "11 yrs" },
+    { name: "Rameez Miz", role: "Head of strength", lifts: "DL 260 · SQ 205 · BP 140", gear: "/images/iron-temple/ramish.webp", years: "14 yrs" },
+    { name: "Meera Iyer", role: "Olympic lifting", lifts: "SN 82 · C&J 104", gear: "/images/iron-temple/unnamed.webp", years: "9 yrs" },
+    { name: "Ismail Thufail", role: "Powerlifting", lifts: "DL 290 · SQ 240 · BP 165", gear: "/images/iron-temple/image.webp", years: "11 yrs" },
     { name: "Tara Menon", role: "Programming + conditioning", lifts: "DL 180 · Row 2k 7:02", gear: "/images/iron-temple/coach-logbook.webp", years: "8 yrs" },
   ],
 };
